@@ -1,19 +1,9 @@
-export default async function ProductsPage() {
-  const getAllProducts = async () => {
-    const response = await fetch("http://localhost:3000/api/products");
-    console.log({ response });
-    if (!response.ok) {
-      throw new Error("Failed to fetch products");
-    }
-    const { products } = await response.json();
-    console.log({ products });
-    products.forEach((product: any) => {
-      console.log(product);
-    });
-    return products;
-  };
+import { container, TYPES } from "@/features/products/di/container";
+import { GetAllProductsUseCase } from "@/features/products/application/get-all.use-case";
 
-  const products = await getAllProducts();
+export default async function ProductsPage() {
+  const getAllProductsUseCase = container.resolve<GetAllProductsUseCase>(TYPES.GetAllProductsUseCase);
+  const products = await getAllProductsUseCase.execute();
 
   return (
     <div>

@@ -10,3 +10,11 @@ const products = [
 export async function GET() {
   return NextResponse.json({ products }, { status: 200 });
 }
+
+export async function POST(request: Request) {
+  const body = await request.json();
+  return NextResponse.json(
+    { product: body, message: "Product created" },
+    { status: 201 }
+  );
+}
